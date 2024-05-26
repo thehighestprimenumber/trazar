@@ -1,11 +1,16 @@
-import {Button, Grid} from "@mui/material";
+import {Grid} from "@mui/material";
+import * as React from 'react';
+import ControlledSelection, {ITreeData} from "../components/ControlledSelection";
 
 export const mockDepartments = ['pollo', 'cerdo', 'carne'];
+export const mockProducts: ITreeData = {
+    carne: ['asado', 'matambre', 'lomo'],
+    cerdo: ['solomillo'],
+    pollo: ['pechuga', 'patamuslo']
+}
 
-export function FilterSelector({handleDepartmentClick}: { handleDepartmentClick: Function }) {
+export function FilterSelector({setSelection}: { setSelection: Function }) {
     return <Grid container spacing={2} my={5}>
-        {mockDepartments.map(d =>
-            <Grid item key={d}><Button onClick={() => handleDepartmentClick(d)}>{d}</Button></Grid>
-        )}
+        <ControlledSelection tree={mockProducts} setSelection={setSelection}/>
     </Grid>
 }

@@ -35,7 +35,7 @@ export interface RowCalculated extends Row {
 
 export interface IFilter {
     key: FilterCategories;
-    value: string;
+    value: string[] | string;
 }
 
 export enum FilterCategories {
@@ -58,7 +58,6 @@ interface Props {
 type ColumnFn = (() => MRT_ColumnDef<RowCalculated>) | ((rows: Row[]) => MRT_ColumnDef<RowCalculated>);
 
 export function GeneralReportByProduct({granularity, filter, rows}: Props) {
-    console.log('filter', JSON.stringify(filter))
     let columnNames: ColumnFn[] = [
         // {accessorKey: 'id', header: 'ID', size: 90, enableHiding: true},
         departamentoColumn,

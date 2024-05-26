@@ -8,8 +8,11 @@ import {
     Row
 } from "../components/graphs/GeneralReportByProduct";
 import {FilterSelector} from "./FilterSelector";
+import {isCategory} from "../components/ControlledSelection";
 
-
+const buildCode = ({departamento, producto}: { departamento: string, producto: string }) => {
+    return `${departamento}-${producto}`
+}
 const rows: Row[] = [{
     id: '1',
     producto: 'lomo',
@@ -17,7 +20,7 @@ const rows: Row[] = [{
     ticketCantidad: 10,
     vendidoCant: 50,
     precio: 8000,
-    fecha: new Date('2024-01-01')
+    fecha: new Date('2024-01-01'),
 }, {
     id: '2',
     producto: 'asado',
@@ -45,18 +48,32 @@ const GeneralReportView = () => {
     const filterRows = () => {
         if (filter?.key === FilterCategories.DEPARTAMENTO && !!filter.value) {
             return rows.filter(row => row.departamento === filter.value)
+        } else {
+            if (filter?.key === FilterCategories.PRODUCTO && !!filter.value.length) {
+                return rows.filter(r => filter.value.includes(buildCode(r)))
+            }
         }
         return rows
     }
 
-    const handleDepartmentClick = (mockDepartment: string) => {
-        setFilter({key: FilterCategories.DEPARTAMENTO, value: mockDepartment})
+    const setSelection = (selection: string[]) => {
+        const selectedCategories = selection.filter(isCategory)
+        if (selectedCategories.length === 1) {
+            setFilter({key: FilterCategories.DEPARTAMENTO, value: selectedCategories[0]})
+        } else if (selection.length === 1){
+            setFilter({key: FilterCategories.PRODUCTO, value: selection})
+        }
+        else if (selection.length === 0){
+            setFilter(undefined)
+        } else {
+            setFilter({key: FilterCategories.DEPARTAMENTO, value: selection})
+        }
     }
 
     return (
         <Container disableGutters>
             <Grid container spacing={2} my={5}>
-                <FilterSelector handleDepartmentClick={handleDepartmentClick}/>
+                <FilterSelector setSelection={setSelection}/>
             </Grid>
             <Grid container spacing={2} my={5}>
                 <GeneralReportByProduct granularity={granularity} filter={filter} rows={filterRows()}/>
