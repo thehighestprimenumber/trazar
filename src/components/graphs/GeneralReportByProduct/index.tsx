@@ -1,11 +1,19 @@
 import DataGridComp from "../components/DataGridComp";
 import React, {useMemo} from "react";
-
-import {argentinaDateFormatter} from "../../../helpers/formatting";
 import {type MRT_ColumnDef,} from 'material-react-table';
-
-const sumBy = require("lodash/sumBy");
-const sum = require("lodash/sum");
+import {
+    departamentoColumn,
+    fechaColumn,
+    montoColumn,
+    montoPrcColumn,
+    precioColumn,
+    productoColumn,
+    ticketCantidadColumn,
+    ticketCantidadPrcColumn,
+    vendidoCantColumn,
+    vendidoCantPrcColumn
+} from "./columns";
+import {indexOf, pullAt} from "lodash";
 
 export interface Row {
     id: string;
@@ -24,103 +32,65 @@ export interface RowCalculated extends Row {
     monto: number;
 }
 
-const width = 150;
-const rows: Row[] = [{
-    id: '1',
-    producto: 'lomo',
-    departamento: 'carne',
-    ticketCantidad: 10,
-    vendidoCant: 50,
-    precio: 8000,
-    fecha: new Date('2024-01-01')
-},
-    {
-        id: '2',
-        producto: 'asado',
-        departamento: 'carne',
-        ticketCantidad: 8,
-        vendidoCant: 60,
-        precio: 6000,
-        fecha: new Date('2024-01-01')
-    },
-    {
-        id: '3',
-        producto: 'pechuga',
-        departamento: 'pollo',
-        ticketCantidad: 14,
-        vendidoCant: 20,
-        precio: 3000,
-        fecha: new Date('2024-01-01')
-    }]
 
-const asPercentage = (n: number) => (n * 100).toFixed(2) + '%'
-const calculatePercentage = (value: keyof Row) => (row: Row) => asPercentage((row[value] as number / sumBy(rows, value)))
+export interface IFilter {
+    key: FilterCategories;
+    value: string;
+}
 
-const calculateMonto = (row: Row) => (row.precio * row.vendidoCant) as number
-const asCurrency = (n: number) => n.toLocaleString?.('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-})
-const calculateMontoPercentage = (row: Row) => asPercentage(calculateMonto(row) / sum(rows.map(calculateMonto)))
+export enum FilterCategories {
+    DEPARTAMENTO = 'departamento',
+    PRODUCTO = 'producto',
+}
 
-const getMonto = (r: Row) => asCurrency(calculateMonto(r));
+export enum Granularities {
+    GENERAL = 'general',
+    SINGLE = 'single',
+}
 
-export const GeneralReportByProduct: React.FC = () => {
+interface Props {
+    rows: Row[],
+    granularity: Granularities,
+    filter?: IFilter | undefined,
+}
+
+
+type ColumnFn = (() => MRT_ColumnDef<RowCalculated>) | ((rows: Row[]) => MRT_ColumnDef<RowCalculated>);
+
+export function GeneralReportByProduct({granularity, filter, rows}: Props) {
+    console.log('filter', JSON.stringify(filter))
+    let columnNames: ColumnFn[] = [
+        // {accessorKey: 'id', header: 'ID', size: 90, enableHiding: true},
+        departamentoColumn,
+        productoColumn,
+        ticketCantidadColumn,
+        ticketCantidadPrcColumn,
+        vendidoCantColumn,
+        vendidoCantPrcColumn,
+        precioColumn,
+        montoColumn,
+        montoPrcColumn,
+        fechaColumn
+    ];
+
+    const removeFromColumns = (column: ColumnFn) => pullAt(columnNames, indexOf(columnNames, column))
+
+    switch (filter?.key) {
+        case FilterCategories.PRODUCTO:
+            removeFromColumns(productoColumn);
+            break;
+        case FilterCategories.DEPARTAMENTO:
+            removeFromColumns(departamentoColumn);
+            removeFromColumns(productoColumn)
+            break;
+    }
+
+
     const columns = useMemo<MRT_ColumnDef<RowCalculated>[]>(
-        () => [
-            {
-                id: 'ventas', header: 'Ventas', columns: [
-                    // {accessorKey: 'id', header: 'ID', size: 90, enableHiding: true},
-                    {accessorKey: 'departamento', header: 'Departamento', filterVariant: 'autocomplete', size: width},
-                    {accessorKey: 'producto', header: 'Producto', size: width, filterVariant: 'autocomplete'},
-                    {accessorKey: 'ticketCantidad', header: 'Cant. de Tickets', filterVariant: 'range', size: width},
-                    {
-                        id: 'ticketCantidadPrc',
-                        header: 'Cant. de Tickets %',
-                        size: width,
-                        filterVariant: 'range',
-                        accessorFn: calculatePercentage('ticketCantidad')
-                    },
-                    {accessorKey: 'vendidoCant', header: 'Cant. Vendida', filterVariant: 'range', size: width},
-                    {
-                        id: 'vendidoCantPrc',
-                        header: 'Cant. Vendida %',
-                        size: width,
-                        filterVariant: 'range',
-                        accessorFn: calculatePercentage("vendidoCant")
-                    },
-                    {
-                        id: 'precio',
-                        header: 'Precio',
-                        filterVariant: 'range',
-                        size: width,
-                        accessorFn: (row) => asCurrency(row.precio)
-                    },
-                    {
-                        id: 'monto',
-                        header: 'Monto',
-                        filterVariant: 'range',
-                        size: width,
-                        accessorFn: getMonto
-                    },
-                    {
-                        id: 'montoPrc',
-                        header: 'Monto %',
-                        filterVariant: 'range',
-                        size: width,
-                        accessorFn: calculateMontoPercentage
-                    },
-                    {
-                        id: 'fecha',
-                        header: 'Fecha',
-                        size: width,
-                        accessorFn: (row: Row) => argentinaDateFormatter.format(row.fecha)
-                    }
-                ]
-            }
-        ], [])
+        () => {
+            return [{id: 'ventas', header: 'Ventas', columns: columnNames.map(c => c(rows))}];
+        }, [filter])
+
 
     return <DataGridComp
         columns={columns}

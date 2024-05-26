@@ -27,7 +27,7 @@ export default function UserNavBar() {
             </Grid>
             {[{path: Paths.Home, label: 'Inicio'}, {path: Paths.GeneralReport, label: 'Reporte General'}]
                 .map(({path, label}) =>
-                    <Grid item xs={12} md={6} lg={3}>
+                    <Grid item xs={12} md={6} lg={3} key={path}>
                         <Button variant='outlined' sx={styles.panelTitle} href={path} key={'profile'}>
                             {label}
                         </Button>

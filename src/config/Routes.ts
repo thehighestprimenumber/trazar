@@ -13,7 +13,7 @@ export const Paths = {
   Landing: '',
   Home: '/home',
   Login: '/login',
-  GeneralReport: '/report',
+  GeneralReport: '/general-report',
 }
 const routes: RouteType[] = [
   {
