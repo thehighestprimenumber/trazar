@@ -25,11 +25,14 @@ export default function UserNavBar() {
                     </Typography>
                 </Box>
             </Grid>
-            <Grid item xs={12} md={7} sx={styles.panelTitleContainer}>
-                <Button sx={styles.panelTitle} href={Paths.Home} key={'profile'}>
-                    Hola Pablissss
-                </Button>
-            </Grid>
+            {[{path: Paths.Home, label: 'Inicio'}, {path: Paths.GeneralReport, label: 'Reporte General'}]
+                .map(({path, label}) =>
+                    <Grid item xs={12} md={6} lg={3}>
+                        <Button variant='outlined' sx={styles.panelTitle} href={path} key={'profile'}>
+                            {label}
+                        </Button>
+                    </Grid>
+                )}
             <Grid item xs={12} md sx={styles.panelTitleContainer}>
                 <Button color={'secondary'} variant={'contained'} onClick={() => logout()} key={'signout'}>
                     Cerrar Sesión

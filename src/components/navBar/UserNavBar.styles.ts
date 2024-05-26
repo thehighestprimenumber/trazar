@@ -13,7 +13,7 @@ export const styles = {
     justifyContent: 'center'
   },
   panelTitle: {
-    fontSize: 26,
+    fontSize: 20,
     textAlign: 'center'
   },
   accountInfoContainer: {

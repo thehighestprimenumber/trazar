@@ -26,8 +26,9 @@ module.exports = {
     "import",
   ],
   rules: {
-    "quotes": ["error", "double"],
+    "quotes": ["warn", "double"],
     "import/no-unresolved": 0,
     "indent": ["error", 2],
+    "@typescript-eslint/ban-ts-comment": "warn",
   },
 };

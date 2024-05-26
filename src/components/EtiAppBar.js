@@ -34,8 +34,8 @@ const EtiAppBar = () => {
   const { t } = useTranslation(SCOPES.COMPONENTS.BAR, { useSuspense: false });
   const { pathname: currentRoute } = useLocation();
   const links = [
-    { href: '/historia-del-eti', title: t('history') },
-    { href: '/manifiesto-etiano', title: t('manifest') }
+    { href: '/historia-del-eti', label: t('history') },
+    { href: '/manifiesto-etiano', label: t('manifest') }
     // {href: "/", title: "Comisión de Género"} // Esto se agregará más adelante
   ];
 
@@ -48,9 +48,9 @@ const EtiAppBar = () => {
     setAnchorElNavGender(null);
   };
   const linksGender = [
-    { href: '/comision-de-genero-who', title: t('genderWho') },
-    { href: '/comision-de-genero-protocol', title: t('genderProtocol') },
-    { href: '/comision-de-genero-contact', title: t('genderContact') }
+    { href: '/comision-de-genero-who', label: t('genderWho') },
+    { href: '/comision-de-genero-protocol', label: t('genderProtocol') },
+    { href: '/comision-de-genero-contact', label: t('genderContact') }
   ];
 
   return (

@@ -6,9 +6,9 @@ import {Container, Grid, Paper} from "@mui/material";
 
 function DashboardCard({children}: { children: ReactNode }) {
     return <Grid item xs={12} sm={12} md={12} lg={6} justifyContent="center" alignItems="center">
-        <Paper square={false} elevation={10} style={{ height: '40vh', width: '100%', minWidth: '300px'}}>
-        {children}
-    </Paper></Grid>;
+        <Paper square={false} elevation={10} style={{height: '40vh', width: '100%', minWidth: '300px'}}>
+            {children}
+        </Paper></Grid>;
 }
 
 const Home = () => {
@@ -16,9 +16,7 @@ const Home = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <Container
-            // style={{display: "flex", flexDirection: "column", justifyContent: "space-around", margin: '5vh'}}
-        >
+        <Container disableGutters>
             <Grid container spacing={2} my={5}>
                 <DashboardCard>
                     <Interpolation/>
