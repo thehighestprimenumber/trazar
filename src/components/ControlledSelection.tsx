@@ -16,9 +16,9 @@ function buildCode(department: string, product: string) {
     return department + '-' + product;
 }
 
-export default function ControlledSelection({tree, setSelection}: { tree: ITreeData, setSelection: Function }) {
-    const [selectedItems, setSelectedItems] = React.useState<Set<string>>(new Set());
-
+export default function ControlledSelection({tree, setSelection, selectedFilters}: { tree: ITreeData, setSelection: Function, selectedFilters: string[] }) {
+    const [selectedItems, setSelectedItems] = React.useState<Set<string>>(new Set(selectedFilters));
+console.log('selectedFilters', JSON.stringify(selectedFilters))
     const handleSelectedItemsChange = (event: React.SyntheticEvent, ids: string[]) => {
         const newSelectedItems = new Set<string>(ids);
         ids.forEach(id => {
@@ -76,7 +76,7 @@ export default function ControlledSelection({tree, setSelection}: { tree: ITreeD
                         </TreeItem>
                     )}
                 </SimpleTreeView>
-                <Button onClick={() => setSelection(Array.from(selectedItems))}>Ver</Button>
+                <Button variant='contained' color={"secondary"} sx={{maxWidth: '200px'}} onClick={() => setSelection(Array.from(selectedItems))}>Aplicar Filtros</Button>
             </Box>
         </Box>
     );

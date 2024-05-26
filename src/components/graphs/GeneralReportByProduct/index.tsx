@@ -3,7 +3,6 @@ import React, {useMemo} from "react";
 import {type MRT_ColumnDef,} from 'material-react-table';
 import {
     departamentoColumn,
-    fechaColumn,
     montoColumn,
     montoPrcColumn,
     precioColumn,
@@ -13,7 +12,7 @@ import {
     vendidoCantColumn,
     vendidoCantPrcColumn
 } from "./columns";
-import {indexOf, pullAt} from "lodash";
+import {indexOf, pullAt, uniqBy} from "lodash";
 
 export interface Row {
     id: string;
@@ -34,7 +33,7 @@ export interface RowCalculated extends Row {
 
 
 export interface IFilter {
-    key: FilterCategories;
+    key?: FilterCategories;
     value: string[] | string;
 }
 
@@ -50,14 +49,14 @@ export enum Granularities {
 
 interface Props {
     rows: Row[],
-    granularity: Granularities,
+    // granularity: Granularities,
     filter?: IFilter | undefined,
 }
 
 
 type ColumnFn = (() => MRT_ColumnDef<RowCalculated>) | ((rows: Row[]) => MRT_ColumnDef<RowCalculated>);
 
-export function GeneralReportByProduct({granularity, filter, rows}: Props) {
+export function GeneralReportByProduct({filter, rows}: Props) {
     let columnNames: ColumnFn[] = [
         // {accessorKey: 'id', header: 'ID', size: 90, enableHiding: true},
         departamentoColumn,
@@ -69,26 +68,27 @@ export function GeneralReportByProduct({granularity, filter, rows}: Props) {
         precioColumn,
         montoColumn,
         montoPrcColumn,
-        fechaColumn
     ];
 
-    const removeFromColumns = (column: ColumnFn) => pullAt(columnNames, indexOf(columnNames, column))
-
-    switch (filter?.key) {
-        case FilterCategories.PRODUCTO:
-            removeFromColumns(productoColumn);
-            break;
-        case FilterCategories.DEPARTAMENTO:
-            removeFromColumns(departamentoColumn);
-            removeFromColumns(productoColumn)
-            break;
+    const removeFromColumns = (column: ColumnFn) => {
+        return pullAt(columnNames, indexOf(columnNames, column));
     }
 
+    function hasOnlyOne(field: 'departamento' | 'producto') {
+        return uniqBy(rows, field).length === 1;
+    }
+
+    if (hasOnlyOne('departamento')) {
+        removeFromColumns(departamentoColumn);
+    } else if (hasOnlyOne('producto')) {
+        debugger
+        removeFromColumns(productoColumn);
+    }
 
     const columns = useMemo<MRT_ColumnDef<RowCalculated>[]>(
         () => {
             return [{id: 'ventas', header: 'Ventas', columns: columnNames.map(c => c(rows))}];
-        }, [filter])
+        }, [filter, rows])
 
 
     return <DataGridComp

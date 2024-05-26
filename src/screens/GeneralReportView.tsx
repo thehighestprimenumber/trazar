@@ -1,9 +1,8 @@
-import {useEffect, useState} from "react";
-import {Container, Grid} from "@mui/material";
+import {useState} from "react";
+import {Button, Container, Grid} from "@mui/material";
 import {
     FilterCategories,
     GeneralReportByProduct,
-    Granularities,
     IFilter,
     Row
 } from "../components/graphs/GeneralReportByProduct";
@@ -40,16 +39,16 @@ const rows: Row[] = [{
 }]
 
 const GeneralReportView = () => {
-    const [granularity, setGranularity] = useState<Granularities>(Granularities.GENERAL)
     const [filter, setFilter] = useState<IFilter | undefined>()
-    useEffect(() => {
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const [showFilters, setShowFilters] = useState(false)
+    const [selectedFilters, setSelectedFilters] = useState<string[]>([])
 
     const filterRows = () => {
+        debugger
         if (filter?.key === FilterCategories.DEPARTAMENTO && !!filter.value) {
             return rows.filter(row => row.departamento === filter.value)
         } else {
-            if (filter?.key === FilterCategories.PRODUCTO && !!filter.value.length) {
+            if (!!filter?.value.length) {
                 return rows.filter(r => filter.value.includes(buildCode(r)))
             }
         }
@@ -58,25 +57,37 @@ const GeneralReportView = () => {
 
     const setSelection = (selection: string[]) => {
         const selectedCategories = selection.filter(isCategory)
+        debugger;
         if (selectedCategories.length === 1) {
             setFilter({key: FilterCategories.DEPARTAMENTO, value: selectedCategories[0]})
-        } else if (selection.length === 1){
+        } else if (selection.length === 1) {
             setFilter({key: FilterCategories.PRODUCTO, value: selection})
-        }
-        else if (selection.length === 0){
+        } else if (selection.length === 0) {
             setFilter(undefined)
         } else {
-            setFilter({key: FilterCategories.DEPARTAMENTO, value: selection})
+            setFilter({value: selection})
         }
+        setSelectedFilters(selection)
+        setShowFilters(false)
     }
 
+    const handleShowFilterChange = () => {
+        setShowFilters(!showFilters)
+    };
     return (
         <Container disableGutters>
             <Grid container spacing={2} my={5}>
-                <FilterSelector setSelection={setSelection}/>
-            </Grid>
-            <Grid container spacing={2} my={5}>
-                <GeneralReportByProduct granularity={granularity} filter={filter} rows={filterRows()}/>
+                <div style={{display: "flex", justifyContent: "space-between", flexDirection: "row"}}>
+                    {showFilters &&
+                        <FilterSelector setSelection={setSelection} selectedFilters={selectedFilters}/>
+                    }
+                    <div style={{display: "flex", justifyContent: "space-between", flexDirection: "column"}}>
+                        <Button variant='contained' color={"secondary"} sx={{maxWidth: '150px'}}
+                                onClick={handleShowFilterChange}>Mostrar
+                            Filtros</Button>
+                        <GeneralReportByProduct filter={filter} rows={filterRows()}/>
+                    </div>
+                </div>
             </Grid>
         </Container>
     );

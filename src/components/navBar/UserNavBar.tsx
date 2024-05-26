@@ -28,12 +28,12 @@ export default function UserNavBar() {
             {[{path: Paths.Home, label: 'Inicio'}, {path: Paths.GeneralReport, label: 'Reporte General'}]
                 .map(({path, label}) =>
                     <Grid item xs={12} md={6} lg={3} key={path}>
-                        <Button variant='outlined' sx={styles.panelTitle} href={path} key={'profile'}>
+                        <Button variant='outlined' href={path} key={'profile'}>
                             {label}
                         </Button>
                     </Grid>
                 )}
-            <Grid item xs={12} md sx={styles.panelTitleContainer}>
+            <Grid item xs={12} md={6} lg={3}>
                 <Button color={'secondary'} variant={'contained'} onClick={() => logout()} key={'signout'}>
                     Cerrar Sesión
                 </Button>
