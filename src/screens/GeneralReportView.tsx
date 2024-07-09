@@ -4,39 +4,14 @@ import {
     FilterCategories,
     GeneralReportByProduct,
     IFilter,
-    Row
 } from "../components/graphs/GeneralReportByProduct";
 import {FilterSelector} from "./FilterSelector";
 import {isCategory} from "../components/ControlledSelection";
+import {rows} from "../components/data";
 
 const buildCode = ({departamento, producto}: { departamento: string, producto: string }) => {
     return `${departamento}-${producto}`
 }
-const rows: Row[] = [{
-    id: '1',
-    producto: 'lomo',
-    departamento: 'carne',
-    ticketCantidad: 10,
-    vendidoCant: 50,
-    precio: 8000,
-    fecha: new Date('2024-01-01'),
-}, {
-    id: '2',
-    producto: 'asado',
-    departamento: 'carne',
-    ticketCantidad: 8,
-    vendidoCant: 60,
-    precio: 6000,
-    fecha: new Date('2024-01-01')
-}, {
-    id: '3',
-    producto: 'pechuga',
-    departamento: 'pollo',
-    ticketCantidad: 14,
-    vendidoCant: 20,
-    precio: 3000,
-    fecha: new Date('2024-01-01')
-}]
 
 const GeneralReportView = () => {
     const [filter, setFilter] = useState<IFilter | undefined>()
@@ -44,7 +19,6 @@ const GeneralReportView = () => {
     const [selectedFilters, setSelectedFilters] = useState<string[]>([])
 
     const filterRows = () => {
-        debugger
         if (filter?.key === FilterCategories.DEPARTAMENTO && !!filter.value) {
             return rows.filter(row => row.departamento === filter.value)
         } else {

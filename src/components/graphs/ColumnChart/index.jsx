@@ -1,7 +1,7 @@
 // install (please try to align the version of installed @nivo packages)
 // yarn add @nivo/bar
 import {ResponsiveBar} from '@nivo/bar'
-import {data} from "../../data";
+import {rows} from "../../data";
 import {argentinaDateFormatter} from "../../../helpers/formatting";
 
 // make sure parent container have a defined height when using
@@ -11,9 +11,9 @@ import {argentinaDateFormatter} from "../../../helpers/formatting";
 // you'll often use just a few of them.
 const ColumnChart = () => (
     <ResponsiveBar
-        data={data.map(({date, ...rest}) => ({...rest, date: argentinaDateFormatter.format(date)}))}
+        data={rows.map(({fecha, ...rest}) => ({...rest, fecha: argentinaDateFormatter.format(fecha)}))}
         keys={['carne', 'pollo', 'cerdo']}
-        indexBy="date"
+        indexBy="fecha"
         margin={{top: 40, right: 100, bottom: 40}}
         padding={0.3}
         valueScale={{type: 'linear'}}

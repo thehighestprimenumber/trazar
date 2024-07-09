@@ -1,39 +1,25 @@
-import {ResponsiveLine} from '@nivo/line'
-import {data as rawData} from "../../data";
-import {argentinaDateFormatter} from "../../../helpers/formatting";
+import {Datum, ResponsiveLine} from '@nivo/line'
+import {ILineChart} from "./types";
 
-function transformData(inputData) {
-    const categories = ["carne", "pollo", "cerdo"];
-
-    const outputData = categories.map(category => {
-        return {
-            id: category,
-            data: inputData.slice(-5).map(entry => ({
-                x: argentinaDateFormatter.format(entry.date),
-                y: entry[category]
-            }))
-        };
-    });
-
-    return outputData;
-}
-
-const Interpolation = () => {
-
-    const data =  transformData(rawData);
-
+const LineChart = ({data, currency, handleFilterChange}: {
+    data: ILineChart[],
+    currency?: boolean,
+    handleFilterChange: (point: Datum) => void
+}) => {
+    // @ts-ignore
     return <ResponsiveLine
         data={data}
         margin={{top: 20, right: 50, bottom: 50, left: 60}}
         xScale={{type: 'point'}}
+        yFormat={currency ? " ^-$0,.0~d" : ' >-0,.0~f'}
         yScale={{
             type: 'linear',
             min: 'auto',
             max: 'auto',
-            stacked: true,
+            stacked: false,
             reverse: false
         }}
-        yFormat=" >-.2f"
+        // yFormat=" >-.2f"
         curve="monotoneX"
         axisTop={null}
         axisRight={null}
@@ -55,6 +41,7 @@ const Interpolation = () => {
         //     legendPosition: 'middle',
         //     truncateTickAt: 0
         // }}
+        // @ts-ignore
         colors={{scheme: 'nivo'}}
         pointSize={10}
         pointColor={{theme: 'background'}}
@@ -65,7 +52,9 @@ const Interpolation = () => {
         enableTouchCrosshair={true}
         useMesh={true}
         legends={[
+
             {
+                onClick: data => handleFilterChange(data),
                 anchor: 'bottom',
                 direction: 'row',
                 justify: false,
@@ -92,4 +81,5 @@ const Interpolation = () => {
         ]}
     />
 }
-export default Interpolation
+export default LineChart
+

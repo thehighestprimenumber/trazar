@@ -1,7 +1,7 @@
 import {ReactNode, useEffect} from "react";
-import Interpolation from "../components/graphs/Interpolation";
+import {Box, Container, Grid, Paper} from "@mui/material";
+import LineByDate from "../components/graphs/LineChart/LineaPorFecha";
 import ColumnChart from "../components/graphs/ColumnChart";
-import {Container, Grid, Paper} from "@mui/material";
 
 
 function DashboardCard({children}: { children: ReactNode }) {
@@ -17,16 +17,20 @@ const Home = () => {
 
     return (
         <Container disableGutters>
-            <Grid container spacing={2} my={5}>
-                <DashboardCard>
-                    <Interpolation/>
-                </DashboardCard>
-                <DashboardCard>
-                    <ColumnChart/>
-                </DashboardCard>
-            </Grid>
-        </Container>
-    );
+            <Box sx={{width: '80vw', height: '80vh'}}>
+                <Grid container spacing={2} my={5}>
+                    {/*<DashboardCard>*/}
+                    {/*    <LineChart data={}/>*/}
+                    {/*</DashboardCard>*/}
+                    <DashboardCard>
+                        <ColumnChart/>
+                    </DashboardCard>
+                    <DashboardCard>
+                        <LineByDate/>
+                    </DashboardCard>
+                </Grid>
+            </Box>
+        </Container>);
 };
 
 export default Home;

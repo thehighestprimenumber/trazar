@@ -4,3 +4,8 @@ export const argentinaDateFormatter = new Intl.DateTimeFormat('es-AR', {
   month: 'numeric', // Full name of the month
   timeZone: 'America/Argentina/Buenos_Aires' // Specify the timezone
 });
+
+export const argentinaShortDateFormatter = new Intl.DateTimeFormat('es-AR', {
+    day: 'numeric',
+    month: 'numeric'
+});

@@ -22,6 +22,7 @@ export interface Row {
     vendidoCant: number;
     precio: number;
     fecha: Date;
+    sucursal: string | number;
 }
 
 export interface RowCalculated extends Row {
