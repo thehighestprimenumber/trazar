@@ -1,7 +1,8 @@
 import {ReactNode, useEffect} from "react";
 import {Box, Container, Grid, Paper} from "@mui/material";
 import LineByDate from "../components/graphs/LineChart/LineaPorFecha";
-import ColumnChart from "../components/graphs/ColumnChart";
+import MyResponsiveBar from "../components/graphs/MyResponsiveBar";
+import GroupedChartByStore from "../components/graphs/GroupedChart";
 
 
 function DashboardCard({children}: { children: ReactNode }) {
@@ -23,7 +24,7 @@ const Home = () => {
                     {/*    <LineChart data={}/>*/}
                     {/*</DashboardCard>*/}
                     <DashboardCard>
-                        <ColumnChart/>
+                        <GroupedChartByStore/>
                     </DashboardCard>
                     <DashboardCard>
                         <LineByDate/>

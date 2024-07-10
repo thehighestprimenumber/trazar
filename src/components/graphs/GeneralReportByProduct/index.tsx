@@ -89,7 +89,7 @@ export function GeneralReportByProduct({filter, rows}: Props) {
     const columns = useMemo<MRT_ColumnDef<RowCalculated>[]>(
         () => {
             return [{id: 'ventas', header: 'Ventas', columns: columnNames.map(c => c(rows))}];
-        }, [filter, rows])
+        }, [filter, rows, columnNames])
 
 
     return <DataGridComp
