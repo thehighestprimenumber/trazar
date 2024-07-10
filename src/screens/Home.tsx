@@ -1,8 +1,8 @@
-import {ReactNode, useEffect} from "react";
+import React, {ReactNode, useEffect} from "react";
 import {Box, Container, Grid, Paper} from "@mui/material";
 import LineByDate from "../components/graphs/LineChart/LineaPorFecha";
-import MyResponsiveBar from "../components/graphs/MyResponsiveBar";
 import GroupedChartByStore from "../components/graphs/GroupedChart";
+import MySunburstChart from "../components/graphs/Starburst";
 
 
 function DashboardCard({children}: { children: ReactNode }) {
@@ -23,11 +23,17 @@ const Home = () => {
                     {/*<DashboardCard>*/}
                     {/*    <LineChart data={}/>*/}
                     {/*</DashboardCard>*/}
+
                     <DashboardCard>
                         <GroupedChartByStore/>
                     </DashboardCard>
+
                     <DashboardCard>
                         <LineByDate/>
+                    </DashboardCard>
+
+                    <DashboardCard>
+                        <MySunburstChart/>
                     </DashboardCard>
                 </Grid>
             </Box>

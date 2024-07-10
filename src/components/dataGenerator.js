@@ -2,12 +2,13 @@ const {flatten, uniqBy} = require("lodash");
 
 
 const mockProducts = {
-    carne: ['asado', 'matambre'],
-    cerdo: ['solomillo'],
+    carne: ['asado', 'matambre', 'picada', 'milanesa'],
+    cerdo: ['solomillo', 'bondiola'],
+    pollo: ['entero', 'patamuslo', 'milanesa', 'pechuga']
 }
 
-const rand = (n = 1) => Math.random() * 100 * n;
-const dates = ['2024-01-01', '2024-01-02']
+const rand = (n = 1) => Math.floor(Math.random() * n);
+const dates = ['2024-07-03', '2024-07-04', '2024-07-05', '2024-07-06', '2024-07-07', '2024-07-08', '2024-07-09'];
 
 function generate() {
     const output = []
@@ -18,15 +19,16 @@ function generate() {
                 cats.forEach(cat => {
                         const prods = Object.values(mockProducts[cat]);
                         prods.forEach(p => {
+                            const vendidoCant = Math.floor(rand(100));
                             const nd = {
                                 id: i++,
                                 producto: p,
                                 departamento: cat,
-                                ticketCantidad: Math.floor(rand(1000)),
-                                vendidoCant: Math.floor(rand(1000)),
-                                precio: Math.floor(rand(100)),
+                                ticketCantidad: (rand(vendidoCant)),
+                                vendidoCant: vendidoCant,
+                                precio: (rand(5000)),
                                 fecha: new Date(d),
-                                sucursal: Math.floor(rand(3))
+                                sucursal: (rand(3))+1
                             }
 
                             output.push(nd)

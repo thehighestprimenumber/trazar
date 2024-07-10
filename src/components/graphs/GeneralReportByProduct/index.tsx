@@ -15,7 +15,7 @@ import {
 import {indexOf, pullAt, uniqBy} from "lodash";
 
 export interface Row {
-    id: string;
+    id: string | number;
     producto: string;
     departamento: string;
     ticketCantidad: number;

@@ -7,7 +7,7 @@ import {groupBy} from "lodash";
 import sumBy from "lodash/sumBy";
 import {argentinaShortDateFormatter} from "../../../helpers/formatting";
 
-enum GraphValue {
+export enum GraphValue {
     UNIT = 'unit',
     PRICE = 'price'
 }
