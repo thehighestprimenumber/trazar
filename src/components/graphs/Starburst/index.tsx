@@ -6,8 +6,8 @@ import {FC, useState} from "react";
 import {ResponsiveSunburst} from '@nivo/sunburst'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {Button} from "@mui/material";
-import FieldValueSwitch from "../../FieldValueSwitch";
 import {GraphValue} from "../GroupedChart";
+import {CardTitle} from "../../CardTitle";
 
 interface SunburstDataItem {
     name: string;
@@ -78,21 +78,13 @@ function transformDataForSunburst(data: Row[], graphValue: GraphValue): Sunburst
 
 interface MySunburstChartProps {
     // data: SunburstDataItem;
+    graphValue: GraphValue
 }
 
-const MySunburstChart: FC<MySunburstChartProps> = () => {
+const MySunburstChart: FC<MySunburstChartProps> = ({graphValue}) => {
     const [history, setHistory] = useState<SunburstDataItem[]>([]);
-    const [graphValue, setGraphValue] = useState(GraphValue.UNIT)
+    // const [graphValue, setGraphValue] = useState(GraphValue.UNIT)
     const [currentData, setCurrentData] = useState<SunburstDataItem>(transformDataForSunburst(rows, graphValue));
-
-    const handleFieldValueChange = () => {
-        setGraphValue(oldState => {
-            if (oldState === GraphValue.UNIT) {
-                return GraphValue.PRICE
-            } else return GraphValue.UNIT
-        })
-        setCurrentData(transformDataForSunburst(rows, graphValue))
-    }
 
     const handleClick = (node: any) => {
         if (node.data.children) {
@@ -112,15 +104,17 @@ const MySunburstChart: FC<MySunburstChartProps> = () => {
 //
     return (
         <>
-            <>
+            <div style={{display: 'flex'}}>
 
                 {history.length > 0
-                    ? <Button onClick={handleBack}><ArrowBackIcon/></Button>
-                    : <FieldValueSwitch handleFieldValueChange={handleFieldValueChange}/>}
-            </>
+                    && <Button onClick={handleBack}><ArrowBackIcon/></Button>
+                    // : <FieldValueSwitch handleFieldValueChange={handleFieldValueChange}/>
+                }
+                <CardTitle graphValue={graphValue}/>
+            </div>
             <ResponsiveSunburst
                 data={currentData}
-                margin={{top: 20, right: 100, bottom: 80, left: 60}}
+                margin={{top: 10, right: 100, bottom: 100, left: 60}}
                 id="name"
                 value="value"
                 cornerRadius={2}

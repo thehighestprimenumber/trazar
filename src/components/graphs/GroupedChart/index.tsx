@@ -6,6 +6,7 @@ import {ResponsiveBar} from "@nivo/bar";
 import {groupBy} from "lodash";
 import sumBy from "lodash/sumBy";
 import {argentinaShortDateFormatter} from "../../../helpers/formatting";
+import {CardTitle} from "../../CardTitle";
 
 export enum GraphValue {
     UNIT = 'unit',
@@ -121,8 +122,8 @@ function transformData(data: Row[], graphValue: GraphValue): TransformedDataItem
 }
 
 
-export default function GroupedChartByStore() {
-    const [graphValue, setGraphValue] = useState(GraphValue.UNIT)
+export default function GroupedChartByStore({graphValue}: {graphValue: GraphValue}) {
+    // const [graphValue, setGraphValue] = useState(GraphValue.UNIT)
     const [filter, setFilter] = useState<string | undefined>()
 
     // function handleFilterChange(datum: Datum) {
@@ -135,17 +136,17 @@ export default function GroupedChartByStore() {
     //     }
     // }
 
-    const handleFieldValueChange = () => {
-        setGraphValue(oldState => {
-            if (oldState === GraphValue.UNIT) {
-                return GraphValue.PRICE
-            } else return GraphValue.UNIT
-        })
-    }
+    // const handleFieldValueChange = () => {
+    //     setGraphValue(oldState => {
+    //         if (oldState === GraphValue.UNIT) {
+    //             return GraphValue.PRICE
+    //         } else return GraphValue.UNIT
+    //     })
+    // }
     const data = transformData(rows, graphValue)
     return <>
-        <FieldValueSwitch handleFieldValueChange={handleFieldValueChange}/>
-
+        {/*<FieldValueSwitch handleFieldValueChange={handleFieldValueChange}/>*/}
+        <CardTitle graphValue={graphValue}/>
         <ResponsiveBar
             // @ts-ignore
             data={data}
@@ -154,7 +155,7 @@ export default function GroupedChartByStore() {
             ]}
             valueFormat={graphValue === GraphValue.PRICE ? " ^-$0,.0~d" : ' >-0,.0~f'}
             indexBy="fecha"
-            margin={{top: 20, right: 100, bottom: 80, left: 60}}
+            margin={{top: 10, right: 100, bottom: 100, left: 60}}
             padding={0.4}
             groupMode="grouped"
             valueScale={{type: 'linear'}}

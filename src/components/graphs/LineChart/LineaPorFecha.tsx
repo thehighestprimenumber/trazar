@@ -7,12 +7,7 @@ import LineChart from "./index";
 import {ILineChart} from "./types";
 import {useState} from "react";
 import {Datum} from "@nivo/line";
-import FieldValueSwitch from "../../FieldValueSwitch";
-
-enum GraphValue {
-    UNIT = 'unit',
-    PRICE = 'price'
-}
+import {CardTitle, GraphValue} from "../../CardTitle";
 
 function transformData({departamento, graphValue}: {
     departamento?: string,
@@ -57,8 +52,8 @@ function transformData({departamento, graphValue}: {
     return outputData
 }
 
-export default function LineaPorFecha() {
-    const [graphValue, setGraphValue] = useState(GraphValue.UNIT)
+export default function LineaPorFecha({graphValue}: {graphValue: GraphValue}) {
+    // const [graphValue, setGraphValue] = useState(GraphValue.UNIT)
     const [filter, setFilter] = useState<string | undefined>()
 
     function handleFilterChange(datum: Datum) {
@@ -71,16 +66,17 @@ export default function LineaPorFecha() {
         }
     }
 
-    const handleFieldValueChange = () => {
-        setGraphValue(oldState => {
-          if (oldState === GraphValue.UNIT) {
-              return GraphValue.PRICE
-          }  else return GraphValue.UNIT
-        })
-    }
+    // const handleFieldValueChange = () => {
+    //     setGraphValue(oldState => {
+    //       if (oldState === GraphValue.UNIT) {
+    //           return GraphValue.PRICE
+    //       }  else return GraphValue.UNIT
+    //     })
+    // }
 
     return <>
-        <FieldValueSwitch handleFieldValueChange={handleFieldValueChange}/>
+        {/*<FieldValueSwitch handleFieldValueChange={handleFieldValueChange}/>*/}
+        <CardTitle graphValue={graphValue}/>
         <LineChart handleFilterChange={handleFilterChange} currency={graphValue == GraphValue.PRICE}
                    data={transformData({departamento: filter, graphValue})}/>
     </>

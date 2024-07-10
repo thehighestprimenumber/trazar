@@ -9,7 +9,7 @@ const LineChart = ({data, currency, handleFilterChange}: {
     // @ts-ignore
     return <ResponsiveLine
         data={data}
-        margin={{top: 20, right: 50, bottom: 100, left: 60}}
+        margin={{top: 5, right: 50, bottom: 110, left: 60}}
         xScale={{type: 'point'}}
         yFormat={currency ? " ^-$0,.0~d" : ' >-0,.0~f'}
         yScale={{
@@ -54,7 +54,7 @@ const LineChart = ({data, currency, handleFilterChange}: {
         legends={[
 
             {
-                onClick: data => handleFilterChange(data),
+                // onClick: data => handleFilterChange(data),
                 anchor: 'bottom',
                 direction: 'row',
                 justify: false,
