@@ -4,10 +4,18 @@ import {
     FilterCategories,
     GeneralReportByProduct,
     IFilter,
+    Row,
+    RowCalculated,
 } from "../components/graphs/GeneralReportByProduct";
 import {FilterSelector} from "./FilterSelector";
 import {isCategory} from "../components/ControlledSelection";
 import {rows} from "../components/data";
+import {
+    asCurrency,
+    calculateMontoPercentage,
+    calculatePercentage,
+    getMonto
+} from "../components/graphs/GeneralReportByProduct/helpers";
 
 const buildCode = ({departamento, producto}: { departamento: string, producto: string }) => {
     return `${departamento}-${producto}`
@@ -18,15 +26,30 @@ const GeneralReportView = () => {
     const [showFilters, setShowFilters] = useState(false)
     const [selectedFilters, setSelectedFilters] = useState<string[]>([])
 
+    const transformedRows: RowCalculated[] = rows.map((row: Row) => {
+        const {vendidoCant, ticketCantidad, precio, ...rest} = row
+
+        return ({
+            ...rest,
+            precio,
+            monto: `${getMonto({
+                vendidoCant,
+                precio
+            })} (${calculateMontoPercentage(rows, row)})`,
+            vendidoCant: `${(vendidoCant)} (${calculatePercentage(rows,"vendidoCant")(row)})`,
+            ticketCantidad: `${(ticketCantidad)} (${calculatePercentage(rows,"ticketCantidad")(row)})`
+        });
+    })
+
     const filterRows = () => {
         if (filter?.key === FilterCategories.DEPARTAMENTO && !!filter.value) {
-            return rows.filter(row => row.departamento === filter.value)
+            return transformedRows.filter(row => row.departamento === filter.value)
         } else {
             if (!!filter?.value.length) {
-                return rows.filter(r => filter.value.includes(buildCode(r)))
+                return transformedRows.filter(r => filter.value.includes(buildCode(r)))
             }
         }
-        return rows
+        return transformedRows
     }
 
     const setSelection = (selection: string[]) => {

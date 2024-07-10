@@ -8,7 +8,7 @@ export const rows: Row[] = [{
     "vendidoCant": 280,
     "precio": 5476,
     "sucursal": 1,
-    "fecha": new Date("2024-07-01T00:00:00.000Z")
+    "fecha": new Date("2024-07-08T00:00:00.000Z")
 }, {
     "id": "1",
     "producto": "matambre",
@@ -17,7 +17,7 @@ export const rows: Row[] = [{
     "vendidoCant": 92,
     "precio": 3856,
     "sucursal": 2,
-    "fecha": new Date("2024-07-01T00:00:00.000Z")
+    "fecha": new Date("2024-07-08T00:00:00.000Z")
 }, {
     "id": "2",
     "producto": "lomo",
@@ -26,7 +26,7 @@ export const rows: Row[] = [{
     "vendidoCant": 36,
     "precio": 2283,
     "sucursal": 2,
-    "fecha": new Date("2024-07-01T00:00:00.000Z")
+    "fecha": new Date("2024-07-08T00:00:00.000Z")
 }, {
     "id": "3",
     "producto": "solomillo",
@@ -35,7 +35,7 @@ export const rows: Row[] = [{
     "vendidoCant": 36,
     "precio": 6297,
     "sucursal": 1,
-    "fecha": new Date("2024-07-01T00:00:00.000Z")
+    "fecha": new Date("2024-07-08T00:00:00.000Z")
 }, {
     "id": "4",
     "producto": "pechuga",
@@ -44,7 +44,7 @@ export const rows: Row[] = [{
     "vendidoCant": 54,
     "precio": 9161,
     "sucursal": 2,
-    "fecha": new Date("2024-07-01T00:00:00.000Z")
+    "fecha": new Date("2024-07-08T00:00:00.000Z")
 }, {
     "id": "5",
     "producto": "patamuslo",
@@ -53,7 +53,7 @@ export const rows: Row[] = [{
     "vendidoCant": 894,
     "precio": 9434,
     "sucursal": 1,
-    "fecha": new Date("2024-07-01T00:00:00.000Z")
+    "fecha": new Date("2024-07-08T00:00:00.000Z")
 }, {
     "id": "6",
     "producto": "asado",
@@ -62,7 +62,7 @@ export const rows: Row[] = [{
     "vendidoCant": 141,
     "precio": 3248,
     "sucursal": 2,
-    "fecha": new Date("2024-07-02T00:00:00.000Z")
+    "fecha": new Date("2024-07-09T00:00:00.000Z")
 }, {
     "id": "7",
     "producto": "matambre",
@@ -71,7 +71,7 @@ export const rows: Row[] = [{
     "vendidoCant": 488,
     "precio": 4039,
     "sucursal": 1,
-    "fecha": new Date("2024-07-02T00:00:00.000Z")
+    "fecha": new Date("2024-07-09T00:00:00.000Z")
 }, {
     "id": "8",
     "producto": "lomo",
@@ -80,7 +80,7 @@ export const rows: Row[] = [{
     "vendidoCant": 952,
     "precio": 5979,
     "sucursal": 2,
-    "fecha": new Date("2024-07-02T00:00:00.000Z")
+    "fecha": new Date("2024-07-09T00:00:00.000Z")
 }, {
     "id": "9",
     "producto": "solomillo",
@@ -89,7 +89,7 @@ export const rows: Row[] = [{
     "vendidoCant": 91,
     "precio": 2860,
     "sucursal": 2,
-    "fecha": new Date("2024-07-02T00:00:00.000Z")
+    "fecha": new Date("2024-07-09T00:00:00.000Z")
 }, {
     "id": "10",
     "producto": "pechuga",
@@ -98,7 +98,7 @@ export const rows: Row[] = [{
     "vendidoCant": 839,
     "precio": 6032,
     "sucursal": 3,
-    "fecha": new Date("2024-07-02T00:00:00.000Z")
+    "fecha": new Date("2024-07-09T00:00:00.000Z")
 }, {
     "id": "11",
     "producto": "patamuslo",
@@ -107,7 +107,7 @@ export const rows: Row[] = [{
     "vendidoCant": 571,
     "precio": 9148,
     "sucursal": 4,
-    "fecha": new Date("2024-07-02T00:00:00.000Z")
+    "fecha": new Date("2024-07-09T00:00:00.000Z")
 }, {
     "id": "12",
     "producto": "asado",

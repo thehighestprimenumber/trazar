@@ -4,13 +4,13 @@ import {type MRT_ColumnDef,} from 'material-react-table';
 import {
     departamentoColumn,
     montoColumn,
-    montoPrcColumn,
+    // montoPrcColumn,
     precioColumn,
     productoColumn,
     ticketCantidadColumn,
-    ticketCantidadPrcColumn,
+    // ticketCantidadPrcColumn,
     vendidoCantColumn,
-    vendidoCantPrcColumn
+    // vendidoCantPrcColumn
 } from "./columns";
 import {indexOf, pullAt, uniqBy} from "lodash";
 
@@ -25,11 +25,11 @@ export interface Row {
     sucursal: string | number;
 }
 
-export interface RowCalculated extends Row {
-    ticketCantidadPrc: number;
-    vendidoCantPrc: number;
-    montoPrc: number;
-    monto: number;
+export interface RowCalculated extends Omit<Row, 'ticketCantidad' | 'vendidoCant'> {
+    ticketCantidad: string,
+    vendidoCant: string,
+    monto: string
+
 }
 
 
@@ -49,13 +49,13 @@ export enum Granularities {
 }
 
 interface Props {
-    rows: Row[],
+    rows: RowCalculated[],
     // granularity: Granularities,
     filter?: IFilter | undefined,
 }
 
 
-type ColumnFn = (() => MRT_ColumnDef<RowCalculated>) | ((rows: Row[]) => MRT_ColumnDef<RowCalculated>);
+type ColumnFn = (() => MRT_ColumnDef<RowCalculated>) | ((rows: RowCalculated[]) => MRT_ColumnDef<RowCalculated>);
 
 export function GeneralReportByProduct({filter, rows}: Props) {
     let columnNames: ColumnFn[] = [
@@ -63,12 +63,12 @@ export function GeneralReportByProduct({filter, rows}: Props) {
         departamentoColumn,
         productoColumn,
         ticketCantidadColumn,
-        ticketCantidadPrcColumn,
+        // ticketCantidadPrcColumn,
         vendidoCantColumn,
-        vendidoCantPrcColumn,
+        // vendidoCantPrcColumn,
         precioColumn,
         montoColumn,
-        montoPrcColumn,
+        // montoPrcColumn,
     ];
 
     const removeFromColumns = (column: ColumnFn) => {
