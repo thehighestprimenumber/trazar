@@ -66,3 +66,11 @@ export const fechaColumn: () => MRT_ColumnDef<RowCalculated> = () => ({
 
     accessorFn: (row: RowCalculated) => argentinaDateFormatter.format(row.fecha)
 });
+
+export const sucursalColumn: () => MRT_ColumnDef<RowCalculated> = () => ({
+    id: 'sucursal',
+    header: 'Sucursal',
+    filterVariant: 'range',
+    accessorKey: 'sucursal'
+    // accessorFn: getMonto
+});

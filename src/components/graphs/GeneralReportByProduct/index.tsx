@@ -2,11 +2,11 @@ import DataGridComp from "../components/DataGridComp";
 import React, {useMemo} from "react";
 import {type MRT_ColumnDef,} from 'material-react-table';
 import {
-    departamentoColumn,
+    departamentoColumn, fechaColumn,
     montoColumn,
     // montoPrcColumn,
     precioColumn,
-    productoColumn,
+    productoColumn, sucursalColumn,
     ticketCantidadColumn,
     // ticketCantidadPrcColumn,
     vendidoCantColumn,
@@ -59,6 +59,8 @@ type ColumnFn = (() => MRT_ColumnDef<RowCalculated>) | ((rows: RowCalculated[]) 
 
 export function GeneralReportByProduct({filter, rows}: Props) {
     let columnNames: ColumnFn[] = [
+                fechaColumn,
+        sucursalColumn,
         // {accessorKey: 'id', header: 'ID', size: 90, enableHiding: true},
         departamentoColumn,
         productoColumn,
@@ -68,6 +70,7 @@ export function GeneralReportByProduct({filter, rows}: Props) {
         // vendidoCantPrcColumn,
         precioColumn,
         montoColumn,
+
         // montoPrcColumn,
     ];
 
