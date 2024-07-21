@@ -41,9 +41,9 @@ function uploadFileToFTP(localFilePath, remoteFilePath, ftpConfig) {
 const localFilePath = "/home/nina/dev/trazar/functions/src/test.txt";
 const remoteFilePath = "Transfer/Cloud/maru-test.txt";
 const ftpConfig = {
-  host: config.FTP_HOST
-  port: config.FTP_PORT
-  user: config.FTP_USER
+  host: config.FTP_HOST,
+  port: config.FTP_PORT,
+  user: config.FTP_USER,
   password: config.FTP_PASSWORD
 };
 
